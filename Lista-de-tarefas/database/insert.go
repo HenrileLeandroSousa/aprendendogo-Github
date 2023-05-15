@@ -3,8 +3,7 @@ package database
 import (
 	"log"
 	database "module-path/Lista-de-tarefas/database/mysql"
-
-	_ "github.com/go-sql-driver/mysql"
+	"module-path/Lista-de-tarefas/tarefas"
 )
 
 func Insert() error {
@@ -15,14 +14,17 @@ func Insert() error {
 	}
 	defer db.Close()
 
-	d := tarefas.InserirTarefas()[0]
-
 	stmt, erro := db.Prepare("INSERT INTO dados(datas, hora, tarefas) VALUES (?, ?, ?)")
 	if erro != nil {
 		log.Fatal(erro)
 		return erro
 	}
-	stmt.Exec(d.Data, d.Hora, d.Tarefa)
+
+	dados := tarefas.Dados()
+
+	for _, v := range dados {
+		stmt.Exec(v.Data, v.Hora, v.Tarefa)
+	}
 	defer stmt.Close()
 
 	return nil

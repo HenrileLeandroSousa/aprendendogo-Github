@@ -3,8 +3,6 @@ package database
 import (
 	"log"
 	database "module-path/Lista-de-tarefas/database/mysql"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func ToAlter() {
